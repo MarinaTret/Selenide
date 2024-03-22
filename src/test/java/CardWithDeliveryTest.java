@@ -1,6 +1,7 @@
 import com.codeborne.selenide.Browser;
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
@@ -16,7 +17,6 @@ import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Selenide.open;
 
 public class CardWithDeliveryTest {
-    private WebDriver driver;
 
     private String generateData(int addDays, String pattern) {
         return LocalDate.now().plusDays(addDays).format(DateTimeFormatter.ofPattern(pattern));
@@ -24,6 +24,7 @@ public class CardWithDeliveryTest {
 
     @Test//успешная отправка формы
     void ValidForm() {
+        Configuration.holdBrowserOpen = true;
         open("http://localhost:9999");
         $("[data-test-id='city'] input").setValue("Санкт-Петербург");
         String planningDate = generateData(3, "dd.MM.yyyy");
@@ -41,6 +42,7 @@ public class CardWithDeliveryTest {
     @Test
         //невалидный город
     void invalidCity() {
+        Configuration.holdBrowserOpen = true;
         open("http://localhost:9999");
         $("[data-test-id='city'] input").setValue("Париж");
         String planningDate = generateData(3, "dd.MM.yyyy");
@@ -58,6 +60,7 @@ public class CardWithDeliveryTest {
     @Test
         //не введен город
     void EmptyCity() {
+        Configuration.holdBrowserOpen = true;
         open("http://localhost:9999");
         String planningDate = generateData(3, "dd.MM.yyyy");
         $("[data-test-id='date'] input").doubleClick().sendKeys(Keys.DELETE);
@@ -74,6 +77,7 @@ public class CardWithDeliveryTest {
     @Test
         //невалидная дата
     void InvalidDate() {
+        Configuration.holdBrowserOpen = true;
         open("http://localhost:9999");
         $("[data-test-id='city'] input").setValue("Санкт-Петербург");
         String planningDate = generateData(0, "dd.MM.yyyy");
@@ -91,6 +95,7 @@ public class CardWithDeliveryTest {
     @Test
         //нелидное имя
     void InvalidName() {
+        Configuration.holdBrowserOpen = true;
         open("http://localhost:9999");
         $("[data-test-id='city'] input").setValue("Санкт-Петербург");
         String planningDate = generateData(3, "dd.MM.yyyy");
@@ -108,6 +113,7 @@ public class CardWithDeliveryTest {
     @Test
         //не введено имя
     void EmptyName() {
+        Configuration.holdBrowserOpen = true;
         open("http://localhost:9999");
         $("[data-test-id='city'] input").setValue("Санкт-Петербург");
         String planningDate = generateData(3, "dd.MM.yyyy");
@@ -124,6 +130,7 @@ public class CardWithDeliveryTest {
     @Test
         //неалидный телефон
     void InvalidPhone() {
+        Configuration.holdBrowserOpen = true;
         open("http://localhost:9999");
         $("[data-test-id='city'] input").setValue("Санкт-Петербург");
         String planningDate = generateData(3, "dd.MM.yyyy");
@@ -141,6 +148,7 @@ public class CardWithDeliveryTest {
     @Test
         //не указан телефон
     void EmptyPhone() {
+        Configuration.holdBrowserOpen = true;
         open("http://localhost:9999");
         $("[data-test-id='city'] input").setValue("Санкт-Петербург");
         String planningDate = generateData(3, "dd.MM.yyyy");
@@ -157,6 +165,7 @@ public class CardWithDeliveryTest {
     @Test
         //пустой Checkbox
     void EmptyCheckbox() {
+        Configuration.holdBrowserOpen = true;
         open("http://localhost:9999");
         $("[data-test-id='city'] input").setValue("Санкт-Петербург");
         String planningDate = generateData(3, "dd.MM.yyyy");
@@ -173,6 +182,7 @@ public class CardWithDeliveryTest {
     @Test
         //выбор города из выпадающено списка
     void selectingСity() {
+        Configuration.holdBrowserOpen = true;
         open("http://localhost:9999");
         $("[data-test-id='city'] input").setValue("Са");
         $$(".menu-item__control").findBy(Condition.text("Санкт-Петербург")).click();
@@ -191,6 +201,7 @@ public class CardWithDeliveryTest {
     @Test
         //выбор даты из выпадающено списка
     void selectingDate() {
+        Configuration.holdBrowserOpen = true;
         open("http://localhost:9999");
         $("[data-test-id='city'] input").setValue("Санкт-Петербург");
         String planningDate = generateData(3, "dd.MM.yyyy");
