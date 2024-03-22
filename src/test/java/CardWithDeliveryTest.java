@@ -1,7 +1,11 @@
+import com.codeborne.selenide.Browser;
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -11,13 +15,14 @@ import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Selenide.open;
 
-class CardWithDeliveryTest {
+public class CardWithDeliveryTest {
+    private WebDriver driver;
 
     private String generateData(int addDays, String pattern) {
         return LocalDate.now().plusDays(addDays).format(DateTimeFormatter.ofPattern(pattern));
     }
 
-    @Test //успешная отправка формы
+    @Test//успешная отправка формы
     void ValidForm() {
         open("http://localhost:9999");
         $("[data-test-id='city'] input").setValue("Санкт-Петербург");
@@ -33,7 +38,8 @@ class CardWithDeliveryTest {
                 .shouldHave(exactText("Успешно! Встреча успешно забронирована на " + planningDate));
     }
 
-    @Test //невалидный город
+    @Test
+        //невалидный город
     void invalidCity() {
         open("http://localhost:9999");
         $("[data-test-id='city'] input").setValue("Париж");
@@ -49,7 +55,8 @@ class CardWithDeliveryTest {
                 .shouldHave(exactText("Доставка в выбранный город недоступна"));
     }
 
-    @Test //не введен город
+    @Test
+        //не введен город
     void EmptyCity() {
         open("http://localhost:9999");
         String planningDate = generateData(3, "dd.MM.yyyy");
@@ -64,7 +71,8 @@ class CardWithDeliveryTest {
                 .shouldHave(exactText("Поле обязательно для заполнения"));
     }
 
-    @Test //невалидная дата
+    @Test
+        //невалидная дата
     void InvalidDate() {
         open("http://localhost:9999");
         $("[data-test-id='city'] input").setValue("Санкт-Петербург");
@@ -79,7 +87,9 @@ class CardWithDeliveryTest {
                 .shouldBe(Condition.visible)
                 .shouldHave(exactText("Заказ на выбранную дату невозможен"));
     }
-    @Test //нелидное имя
+
+    @Test
+        //нелидное имя
     void InvalidName() {
         open("http://localhost:9999");
         $("[data-test-id='city'] input").setValue("Санкт-Петербург");
@@ -95,7 +105,8 @@ class CardWithDeliveryTest {
                 .shouldHave(exactText("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы."));
     }
 
-    @Test //не введено имя
+    @Test
+        //не введено имя
     void EmptyName() {
         open("http://localhost:9999");
         $("[data-test-id='city'] input").setValue("Санкт-Петербург");
@@ -110,7 +121,8 @@ class CardWithDeliveryTest {
                 .shouldHave(exactText("Поле обязательно для заполнения"));
     }
 
-    @Test //неалидный телефон
+    @Test
+        //неалидный телефон
     void InvalidPhone() {
         open("http://localhost:9999");
         $("[data-test-id='city'] input").setValue("Санкт-Петербург");
@@ -126,7 +138,8 @@ class CardWithDeliveryTest {
                 .shouldHave(exactText("Телефон указан неверно. Должно быть 11 цифр, например, +79012345678."));
     }
 
-    @Test //не указан телефон
+    @Test
+        //не указан телефон
     void EmptyPhone() {
         open("http://localhost:9999");
         $("[data-test-id='city'] input").setValue("Санкт-Петербург");
@@ -141,7 +154,8 @@ class CardWithDeliveryTest {
                 .shouldHave(exactText("Поле обязательно для заполнения"));
     }
 
-    @Test //пустой Checkbox
+    @Test
+        //пустой Checkbox
     void EmptyCheckbox() {
         open("http://localhost:9999");
         $("[data-test-id='city'] input").setValue("Санкт-Петербург");
@@ -156,7 +170,8 @@ class CardWithDeliveryTest {
                 .shouldHave(exactText("Я соглашаюсь с условиями обработки и использования моих персональных данных"));
     }
 
-    @Test //выбор города из выпадающено списка
+    @Test
+        //выбор города из выпадающено списка
     void selectingСity() {
         open("http://localhost:9999");
         $("[data-test-id='city'] input").setValue("Са");
@@ -173,7 +188,8 @@ class CardWithDeliveryTest {
                 .shouldHave(exactText("Успешно! Встреча успешно забронирована на " + planningDate));
     }
 
-    @Test //выбор даты из выпадающено списка
+    @Test
+        //выбор даты из выпадающено списка
     void selectingDate() {
         open("http://localhost:9999");
         $("[data-test-id='city'] input").setValue("Санкт-Петербург");
