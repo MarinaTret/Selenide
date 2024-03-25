@@ -13,8 +13,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import static com.codeborne.selenide.Condition.exactText;
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.files.DownloadActions.click;
 
 public class CardWithDeliveryTest {
 
@@ -176,7 +178,7 @@ public class CardWithDeliveryTest {
     void selectingСity() {
         open("http://localhost:9999");
         $("[data-test-id='city'] input").setValue("Са");
-        $$(".menu-item__control").findBy(Condition.text("Санкт-Петербург")).click();
+        $$(".menu-item__control").findBy(text("Санкт-Петербург")).click();
         String planningDate = generateData(3, "dd.MM.yyyy");
         $("[data-test-id='date'] input").doubleClick().sendKeys(Keys.DELETE);
         $("[data-test-id='date'] input").setValue(planningDate);
@@ -194,14 +196,14 @@ public class CardWithDeliveryTest {
     void selectingDate() {
         open("http://localhost:9999");
         $("[data-test-id='city'] input").setValue("Санкт-Петербург");
-        String planningDate = generateData(3, "dd.MM.yyyy");
+        String planningDate = generateData(7, "dd.MM.yyyy");
         //$("[data-test-id='date'] input").doubleClick().sendKeys(Keys.DELETE);
         $("[data-test-id='date'] input").click();
         if (!generateData(3, "MM").equals(generateData(7, "MM"))) {
-            $$("div.calendar__arrow.calendar__arrow_direction_right").get(1).click();
-            return;
+            $$(".calendar__arrow.calendar__arrow_direction_right").get(1).click();
+            $$(".calendar__name").findBy(text("Апрель")).click();
         }
-        $$(".calendar-input__calendar-wrapper").findBy(Condition.text(generateData(7, "dd"))).click();
+        $$(".calendar__dayLast TestL").findBy(text(generateData(7, "d"))).click();
         $("[data-test-id='date'] input").setValue(planningDate);
         $("[data-test-id='name'] input").setValue("Иванов Иван");
         $("[data-test-id='phone'] input").setValue("+79234567899");
