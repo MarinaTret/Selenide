@@ -22,7 +22,8 @@ public class CardWithDeliveryTest {
         return LocalDate.now().plusDays(addDays).format(DateTimeFormatter.ofPattern(pattern));
     }
 
-    @Test//успешная отправка формы
+    @Test
+//успешная отправка формы
     void ValidForm() {
         open("http://localhost:9999");
         $("[data-test-id='city'] input").setValue("Санкт-Петербург");
@@ -197,7 +198,8 @@ public class CardWithDeliveryTest {
         //$("[data-test-id='date'] input").doubleClick().sendKeys(Keys.DELETE);
         $("[data-test-id='date'] input").click();
         if (!generateData(3, "MM").equals(generateData(7, "MM"))) {
-
+            $$("div.calendar__arrow.calendar__arrow_direction_right").get(1).click();
+            return;
         }
         $$(".calendar-input__calendar-wrapper").findBy(Condition.text(generateData(7, "dd"))).click();
         $("[data-test-id='date'] input").setValue(planningDate);
