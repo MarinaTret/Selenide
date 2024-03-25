@@ -203,7 +203,7 @@ public class CardWithDeliveryTest {
             $$(".calendar__arrow.calendar__arrow_direction_right").get(1).click();
             $$(".calendar__name").findBy(text("Апрель")).click();
         }
-        $$(".calendar__dayLast TestL").findBy(text(generateData(7, "d"))).click();
+        $$(".calendar__day").findBy(text(generateData(7, "d"))).click();
         $("[data-test-id='date'] input").setValue(planningDate);
         $("[data-test-id='name'] input").setValue("Иванов Иван");
         $("[data-test-id='phone'] input").setValue("+79234567899");
