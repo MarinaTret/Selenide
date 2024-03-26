@@ -200,8 +200,7 @@ public class CardWithDeliveryTest {
         //$("[data-test-id='date'] input").doubleClick().sendKeys(Keys.DELETE);
         $("[data-test-id='date'] input").click();
         if (!generateData(3, "MM").equals(generateData(7, "MM"))) {
-            $$(".calendar__arrow.calendar__arrow_direction_right").get(1).click();
-            $$(".calendar__name").findBy(text("Апрель")).click();
+            $$(".calendar__arrow_direction_right").get(1).click();
         }
         $$(".calendar__day").findBy(text(generateData(7, "d"))).click();
         $("[data-test-id='date'] input").setValue(planningDate);
